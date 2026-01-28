@@ -1,0 +1,7 @@
+Sticky ball experiment one and AI tutorial
+Create a project directory
+
+In that directory generate a sorted list of 25 English words 5 to 7 characters long randomly selected from an online dictionary. Put the sorted list in a JSON container stored in a file: SBEXP1.json
+
+In a pyside app create a text box that includes QT auto complete with the 25 English words as the search corpus. Create a text box below the first text box that shows the first result of QT autocomplete.
+Wrap the app in a docker container.
