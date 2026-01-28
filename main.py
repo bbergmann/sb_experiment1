@@ -8,10 +8,11 @@ import json
 from pathlib import Path
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, 
-    QLineEdit, QLabel, QCompleter, QGraphicsDropShadowEffect
+    QLineEdit, QLabel, QCompleter, QGraphicsDropShadowEffect,
+    QListView
 )
 from PySide6.QtCore import Qt, QStringListModel
-from PySide6.QtGui import QColor, QFont, QFontDatabase
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QPalette
 
 
 class LiquidGlassWindow(QMainWindow):
@@ -83,6 +84,38 @@ class LiquidGlassWindow(QMainWindow):
         self.completer = QCompleter(self.words)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.completer.setFilterMode(Qt.MatchContains)
+        
+        # Create custom styled popup for X11 compatibility (fixes BUG-001)
+        popup = QListView()
+        popup.setObjectName("completerPopup")
+        
+        # Apply styling directly to the popup widget for X11 compatibility
+        popup.setStyleSheet("""
+            QListView#completerPopup {
+                background-color: #1e1e32;
+                border: 1px solid rgba(138, 180, 248, 0.4);
+                border-radius: 12px;
+                padding: 8px;
+                color: rgba(255, 255, 255, 0.9);
+                outline: none;
+                font-size: 14px;
+            }
+            QListView#completerPopup::item {
+                padding: 10px 16px;
+                border-radius: 8px;
+                margin: 2px 4px;
+            }
+            QListView#completerPopup::item:hover {
+                background-color: rgba(138, 180, 248, 0.25);
+            }
+            QListView#completerPopup::item:selected {
+                background-color: rgba(138, 180, 248, 0.4);
+                color: white;
+            }
+        """)
+        
+        # Set the custom popup
+        self.completer.setPopup(popup)
         self.search_input.setCompleter(self.completer)
         
         # Connect signals
