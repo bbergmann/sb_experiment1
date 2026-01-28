@@ -1,0 +1,21 @@
+# Docker Compose for First Words - PySide6 GUI App with XQuartz
+#
+# macOS Setup (one-time):
+# 1. Open XQuartz
+# 2. Go to XQuartz > Preferences > Security
+# 3. Check "Allow connections from network clients"
+# 4. Restart XQuartz
+# 5. Run: xhost +localhost
+#
+# Then run: docker-compose up --build
+
+services:
+  firstwords:
+    build: .
+    container_name: firstwords
+    environment:
+      - DISPLAY=host.docker.internal:0
+    volumes:
+      - ./SBEXP1.json:/app/SBEXP1.json:ro
+    stdin_open: true
+    tty: true
