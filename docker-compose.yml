@@ -1,20 +1,16 @@
-# Docker Compose for First Words - PySide6 GUI App with XQuartz
+# Docker Compose for First Words - PySide6 GUI App with VNC
 #
-# macOS Setup (one-time):
-# 1. Open XQuartz
-# 2. Go to XQuartz > Preferences > Security
-# 3. Check "Allow connections from network clients"
-# 4. Restart XQuartz
-# 5. Run: xhost +localhost
+# Run: docker-compose up --build
+# Then open: http://localhost:6080/vnc.html
 #
-# Then run: docker-compose up --build
+# The app will be accessible via your web browser.
 
 services:
   firstwords:
     build: .
     container_name: firstwords
-    environment:
-      - DISPLAY=host.docker.internal:0
+    ports:
+      - "6080:6080"
     volumes:
       - ./SBEXP1.json:/app/SBEXP1.json:ro
     stdin_open: true
